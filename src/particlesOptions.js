@@ -2,7 +2,7 @@ export const PARTICLES_OPTIONS =
 {
   "particles": {
     "number": {
-      "value": 250,
+      "value": 200,
       "density": {
         "enable": true,
         "value_area": 800
@@ -18,7 +18,7 @@ export const PARTICLES_OPTIONS =
         "color": "#000000"
       },
       "polygon": {
-        "nb_sides": 4
+        "nb_sides": 2
       },
       "image": {
         "src": "img/github.svg",
@@ -37,7 +37,7 @@ export const PARTICLES_OPTIONS =
       }
     },
     "size": {
-      "value": 3,
+      "value": 2,
       "random": true,
       "anim": {
         "enable": false,
@@ -55,7 +55,7 @@ export const PARTICLES_OPTIONS =
     },
     "move": {
       "enable": true,
-      "speed": 6,
+      "speed": 2,
       "direction": "none",
       "random": false,
       "straight": false,
