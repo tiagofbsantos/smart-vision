@@ -4,7 +4,7 @@ import './ImageLinkForm.css';
 const ImageLinkForm = ({ onInputChange, onPictureSubmit }) => {
 	return (
 		<React.Fragment>
-			<p className='f3'>
+			<p className='white f3'>
 				{'This Smart Vision will detect faces in your pictures. Give it a try.'}
 			</p>
 			<div className='center'>

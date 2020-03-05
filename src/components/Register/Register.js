@@ -1,4 +1,5 @@
 import React from 'react';
+import '../Signin/Signin.css';
 
 class Register extends React.Component {
 	constructor(props) {
@@ -10,14 +11,14 @@ class Register extends React.Component {
 		}
 	}
 
-	onNameChange = (event) => this.setState({name: event.target.value});
+	onNameChange = (event) => this.setState({ name: event.target.value });
 
-	onEmailChange = (event) => this.setState({email: event.target.value});
+	onEmailChange = (event) => this.setState({ email: event.target.value });
 
-	onPasswordChange = (event) => this.setState({password: event.target.value});
+	onPasswordChange = (event) => this.setState({ password: event.target.value });
 
 	onSubmitSignIn = () => {
-		fetch('https://infinite-cove-25144.herokuapp.com/register', {
+		fetch('http://localhost:3005/register', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
@@ -45,7 +46,7 @@ class Register extends React.Component {
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
 				        <input 
-				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black"
 				        	type="text"
 				        	name="name"
 				        	id="name"
@@ -55,7 +56,7 @@ class Register extends React.Component {
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
 				        <input
-				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black"
 				        	type="email"
 				        	name="email-address" 
 				        	id="email-address"
@@ -65,7 +66,7 @@ class Register extends React.Component {
 				      <div className="mv3">
 				        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
 				        <input
-				      	  className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+				      	  className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black"
 				        	type="password"
 				        	name="password"
 				        	id="password"
