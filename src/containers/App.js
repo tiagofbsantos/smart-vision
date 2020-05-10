@@ -69,6 +69,10 @@ class App extends Component {
     }
   }
 
+  saveAuthTokenInSessions = token => {
+    window.sessionStorage.setItem("token", token);
+  };
+
   loadUser = data => {
     this.setState({
       user: {
@@ -190,11 +194,16 @@ class App extends Component {
             <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
           </React.Fragment>
         ) : route === "signin" || route === "signout" ? (
-          <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          <Signin
+            loadUser={this.loadUser}
+            onRouteChange={this.onRouteChange}
+            saveAuthTokenInSessions={this.saveAuthTokenInSessions}
+          />
         ) : (
           <Register
             loadUser={this.loadUser}
             onRouteChange={this.onRouteChange}
+            saveAuthTokenInSessions={this.saveAuthTokenInSessions}
           />
         )}
       </div>
