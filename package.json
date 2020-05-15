@@ -1,12 +1,24 @@
 {
   "name": "smart-vision",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "description": "React Progressive Web App for finding photos in pictures",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiagofbsantos/smart-vision.git"
+  },
+  "author": "https://www.tiagofbsantos.com/",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiagofbsantos/smart-vision/issues"
+  },
+  "homepage": "https://smartvision.tiagofbsantos.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-particles-js": "^2.7.1",
