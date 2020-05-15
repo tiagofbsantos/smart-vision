@@ -7,11 +7,11 @@ class Profile extends React.Component {
     this.state = {
       name: this.props.user.name,
       age: this.props.user.age,
-      pet: this.props.user.pet
+      pet: this.props.user.pet,
     };
   }
 
-  onFormChange = event => {
+  onFormChange = (event) => {
     switch (event.target.name) {
       case "user-name":
         this.setState({ name: event.target.value });
@@ -27,16 +27,16 @@ class Profile extends React.Component {
     }
   };
 
-  onProfileUpdate = data => {
+  onProfileUpdate = (data) => {
     fetch(`http://localhost:3005/profile/${this.props.user.id}`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: window.sessionStorage.getItem("token")
+        Authorization: window.sessionStorage.getItem("token"),
       },
-      body: JSON.stringify({ formInput: data })
+      body: JSON.stringify({ formInput: data }),
     })
-      .then(resp => {
+      .then((resp) => {
         if (resp.status === 200 || resp.status === 304) {
           this.props.toggleModal();
           this.props.loadUser({ ...this.props.user, ...data }); //overrides user with data differences
@@ -53,7 +53,7 @@ class Profile extends React.Component {
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center bg-white">
           <main className="pa4 black-80 w-80">
             <img
-              src="http://tachyons.io/img/logo.jpg"
+              src="https://tachyons.io/img/logo.jpg"
               className="h3 w3 dib"
               alt="avatar"
             />
