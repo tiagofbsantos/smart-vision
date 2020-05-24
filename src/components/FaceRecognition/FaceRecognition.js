@@ -21,9 +21,15 @@ const FaceRecognition = ({ imageUrl, boxes }) => {
                 top: box.topRow,
                 right: box.rightCol,
                 bottom: box.bottomRow,
-                left: box.leftCol
+                left: box.leftCol,
               }}
-            ></div>
+            >
+              <div className="celebDescription">
+                <p>
+                  {box.name}, {Math.trunc(box.certainty * 100)}% sure
+                </p>
+              </div>
+            </div>
           );
         })}
       </div>

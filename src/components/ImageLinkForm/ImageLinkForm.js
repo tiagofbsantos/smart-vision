@@ -5,8 +5,10 @@ const ImageLinkForm = ({ onInputChange, onPictureSubmit }) => {
   return (
     <React.Fragment>
       <p className="white f3">
-        {"This Smart Vision will detect faces in your pictures. Give it a try."}
+        This Smart Vision will detect faces in your pictures, and what
+        celibrities they look like.
       </p>
+      <p className="white f3">Try it out by pasting a picture URL below.</p>
       <div className="center">
         <div className="form center pa4 br3 shadow-5">
           <input

@@ -6,3 +6,15 @@
   justify-content: center;
   cursor: pointer;
 }
+
+.celebDescription {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  color: white;
+  font-size: 12px;
+  text-shadow: 0 0 2px black, 0 0 4px black, 0 0 6px black, 0 0 8px black,
+    0px 0px 10px black;
+  z-index: 999;
+}

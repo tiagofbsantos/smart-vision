@@ -26,8 +26,8 @@ const initialState = {
     entries: 0,
     joined: "",
     pet: "",
-    age: ""
-  }
+    age: "",
+  },
 };
 
 class App extends Component {
@@ -43,21 +43,21 @@ class App extends Component {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token
-        }
+          Authorization: token,
+        },
       })
-        .then(resp => resp.json())
-        .then(data => {
+        .then((resp) => resp.json())
+        .then((data) => {
           if (data && data.id) {
             fetch(`http://localhost:3005/profile/${data.id}`, {
               method: "get",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: token
-              }
+                Authorization: token,
+              },
             })
-              .then(resp => resp.json())
-              .then(user => {
+              .then((resp) => resp.json())
+              .then((user) => {
                 if (user && user.email) {
                   this.loadUser(user);
                   this.onRouteChange("home");
@@ -69,47 +69,50 @@ class App extends Component {
     }
   }
 
-  saveAuthTokenInSessions = token => {
+  saveAuthTokenInSessions = (token) => {
     window.sessionStorage.setItem("token", token);
   };
 
-  loadUser = data => {
+  loadUser = (data) => {
     this.setState({
       user: {
         id: data.id,
         name: data.name,
         email: data.email,
         entries: data.entries,
-        joined: data.joined
-      }
+        joined: data.joined,
+      },
     });
   };
 
-  calculateFaceLocations = data => {
+  calculateFaceLocations = (data) => {
     if (data && data.outputs) {
       const image = document.getElementById("inputimage");
       const width = Number(image.width);
       const height = Number(image.height);
-      return data.outputs[0].data.regions.map(face => {
+      return data.outputs[0].data.regions.map((face) => {
         const clarifaiFace = face.region_info.bounding_box;
+        const celibrity = face.data.concepts[0];
         return {
           leftCol: clarifaiFace.left_col * width,
           topRow: clarifaiFace.top_row * height,
           rightCol: width - clarifaiFace.right_col * width,
-          bottomRow: height - clarifaiFace.bottom_row * height
+          bottomRow: height - clarifaiFace.bottom_row * height,
+          name: celibrity.name,
+          certainty: celibrity.value,
         };
       });
     }
     return;
   };
 
-  displayFaceBoxes = boxes => {
+  displayFaceBoxes = (boxes) => {
     if (boxes) {
       this.setState({ boxes });
     }
   };
 
-  onInputChange = event => this.setState({ input: event.target.value });
+  onInputChange = (event) => this.setState({ input: event.target.value });
 
   onPictureSubmit = () => {
     this.setState({ imageUrl: this.state.input });
@@ -117,42 +120,42 @@ class App extends Component {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: window.sessionStorage.getItem("token")
+        Authorization: window.sessionStorage.getItem("token"),
       },
-      body: JSON.stringify({ input: this.state.input })
+      body: JSON.stringify({ input: this.state.input }),
     })
-      .then(response => response.json())
-      .then(response => {
+      .then((response) => response.json())
+      .then((response) => {
         if (response) {
           fetch("http://localhost:3005/image", {
             method: "put",
             headers: {
               "Content-Type": "application/json",
-              Authorization: window.sessionStorage.getItem("token")
+              Authorization: window.sessionStorage.getItem("token"),
             },
-            body: JSON.stringify({ id: this.state.user.id })
+            body: JSON.stringify({ id: this.state.user.id }),
           })
-            .then(response => response.json())
-            .then(count =>
+            .then((response) => response.json())
+            .then((count) =>
               this.setState(Object.assign(this.state.user, { entries: count }))
             )
             .catch(console.log);
         }
         this.displayFaceBoxes(this.calculateFaceLocations(response));
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  onRouteChange = route => {
+  onRouteChange = (route) => {
     if (route === "signout") return this.setState(initialState);
     else if (route === "home") this.setState({ isSignedIn: true });
     this.setState({ route });
   };
 
   toggleModal = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
-      isProfileOpen: !prevState.isProfileOpen
+      isProfileOpen: !prevState.isProfileOpen,
     }));
   };
 
@@ -163,7 +166,7 @@ class App extends Component {
       route,
       boxes,
       isProfileOpen,
-      user
+      user,
     } = this.state;
     return (
       <div className="App">
