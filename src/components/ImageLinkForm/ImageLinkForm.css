@@ -1,49 +1,165 @@
 .form {
   width: 700px;
-  background: radial-gradient(
-        circle farthest-side at 0% 50%,
-        #fb1 23.5%,
-        rgba(240, 166, 17, 0) 0
-      )
-      21px 30px,
-    radial-gradient(
-        circle farthest-side at 0% 50%,
-        #b71 24%,
-        rgba(240, 166, 17, 0) 0
-      )
-      19px 30px,
-    linear-gradient(
-        #fb1 14%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 85%,
-        #fb1 0
-      )
-      0 0,
-    linear-gradient(
-        150deg,
-        #fb1 24%,
-        #b71 0,
-        #b71 26%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 74%,
-        #b71 0,
-        #b71 76%,
-        #fb1 0
-      )
-      0 0,
-    linear-gradient(
-        30deg,
-        #fb1 24%,
-        #b71 0,
-        #b71 26%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 74%,
-        #b71 0,
-        #b71 76%,
-        #fb1 0
-      )
-      0 0,
-    linear-gradient(90deg, #b71 2%, #fb1 0, #fb1 98%, #b71 0%) 0 0 #fb1;
-  background-size: 40px 60px;
   margin-bottom: 10vh;
+  position: absolute;
+  overflow: hidden;
+  background-color: #2b4d8d;
+  background-image: repeating-radial-gradient(
+      circle at 0rem 1rem,
+      transparent,
+      transparent 0.28rem,
+      #82bfe0 0.3rem,
+      #82bfe0 0.36rem,
+      transparent 0.38rem,
+      transparent 1.08rem
+    ),
+    repeating-radial-gradient(
+      circle at 2rem 1rem,
+      transparent,
+      transparent 0.28rem,
+      #82bfe0 0.3rem,
+      #82bfe0 0.36rem,
+      transparent 0.38rem,
+      transparent 1.08rem
+    ),
+    repeating-radial-gradient(
+      circle at 1rem 2rem,
+      transparent,
+      transparent 0.28rem,
+      #82bfe0 0.3rem,
+      #82bfe0 0.36rem,
+      transparent 0.38rem,
+      transparent 1.08rem
+    ),
+    repeating-radial-gradient(
+      circle at 1rem 0rem,
+      transparent,
+      transparent 0.28rem,
+      #82bfe0 0.3rem,
+      #82bfe0 0.36rem,
+      transparent 0.38rem,
+      transparent 1.08rem
+    ),
+    repeating-radial-gradient(
+      circle at 0rem 1rem,
+      transparent,
+      transparent 0.24rem,
+      #4169e1 0.26rem,
+      #4169e1 0.46rem,
+      transparent 0.48rem,
+      transparent 1.12rem
+    ),
+    repeating-radial-gradient(
+      circle at 2rem 1rem,
+      transparent,
+      transparent 0.24rem,
+      #4169e1 0.26rem,
+      #4169e1 0.46rem,
+      transparent 0.48rem,
+      transparent 1.12rem
+    ),
+    repeating-radial-gradient(
+      circle at 1rem 2rem,
+      transparent,
+      transparent 0.24rem,
+      #4169e1 0.26rem,
+      #4169e1 0.46rem,
+      transparent 0.48rem,
+      transparent 1.12rem
+    ),
+    repeating-radial-gradient(
+      circle at 1rem 0rem,
+      transparent,
+      transparent 0.24rem,
+      #4169e1 0.26rem,
+      #4169e1 0.46rem,
+      transparent 0.48rem,
+      transparent 1.12rem
+    );
+  background-size: 2rem 2rem;
+}
+
+.form input,
+.form button {
+  z-index: 999;
+}
+
+.form button {
+  background: #3399ff;
+}
+
+.square {
+  position: absolute;
+  border-radius: 20px;
+  background: white;
+  animation: ripple 15s infinite;
+  box-shadow: 0px 0px 1px 0px #508fb9;
+}
+
+.small {
+  width: 190px;
+  height: 50px;
+  left: 477px;
+  bottom: 27px;
+}
+
+.medium {
+  width: 215px;
+  height: 70px;
+  left: 464.5px; /* small.left-(medium.width-small.width)/2 */
+  bottom: 17px; /* small.bottom-(medium.height-small.height)/2 */
+}
+
+.large {
+  width: 240px;
+  height: 90px;
+  left: 452px;
+  bottom: 7px;
+}
+
+.xlarge {
+  width: 265px;
+  height: 110px;
+  left: 439.5px;
+  bottom: -3px;
+}
+
+.xxlarge {
+  width: 290px;
+  height: 130px;
+  left: 427px;
+  bottom: -13px;
+}
+
+.shade1 {
+  opacity: 0.1;
+}
+.shade2 {
+  opacity: 0.3;
+}
+
+.shade3 {
+  opacity: 0.5;
+}
+
+.shade4 {
+  opacity: 0.7;
+}
+
+.shade5 {
+  opacity: 0.9;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(0.8);
+  }
 }
