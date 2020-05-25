@@ -57,13 +57,13 @@ class Profile extends React.Component {
                 alt="avatar"
               />
             )}
-            <h1>{this.state.name}</h1>
-            <h4>{`Images Submitted: ${user.entries}`}</h4>
-            <p>{`Member since: ${new Date(
+            <h1 className="mv1">{this.state.name}</h1>
+            <h4 className="mb1">{`Images Submitted: ${user.entries}`}</h4>
+            <p className="mb1">{`Member since: ${new Date(
               user.joined
             ).toLocaleDateString()}`}</p>
-            <hr />
-            <label className="mt2 fw6" htmlFor="user-name">
+            <hr className="mv1" />
+            <label className="mv1 fw6" htmlFor="user-name">
               Name:
             </label>
             <input
@@ -88,14 +88,11 @@ class Profile extends React.Component {
             />
             <button
               onClick={() => this.setState({ avatar: "" })}
-              className="b pa2 grow pointer hover-white w-100 mv4 bg-light-green b--black-20"
+              className="b pa2 grow pointer hover-white w-100 mv2 bg-light-green b--black-20"
             >
               Delete Custom Avatar
             </button>
-            <div
-              className="mt4"
-              style={{ display: "flex", justifyContent: "space-evenly" }}
-            >
+            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
               <button
                 onClick={() => this.onProfileUpdate({ name, avatar })}
                 className="b pa2 grow pointer hover-white w-40 bg-light-blue b--black-20"
