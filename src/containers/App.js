@@ -25,8 +25,7 @@ const initialState = {
     email: "",
     entries: 0,
     joined: "",
-    pet: "",
-    age: "",
+    avatar: "",
   },
 };
 
@@ -81,6 +80,7 @@ class App extends Component {
         email: data.email,
         entries: data.entries,
         joined: data.joined,
+        avatar: data.avatar,
       },
     });
   };
@@ -175,6 +175,7 @@ class App extends Component {
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
           toggleModal={this.toggleModal}
+          user={user}
         />
         {isProfileOpen && (
           <Modal>

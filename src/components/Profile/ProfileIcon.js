@@ -29,11 +29,19 @@ class ProfileIcon extends React.Component {
             data-toggle="dropdown"
             aria-expanded={this.state.dropdownOpen}
           >
-            <img
-              src="https://tachyons.io/img/logo.jpg"
-              className="br-100 ba h3 w3 dib"
-              alt="avatar"
-            />
+            {this.props.user.avatar ? (
+              <img
+                src={this.props.user.avatar}
+                className="br-100 ba h3 w3 dib"
+                alt="avatar"
+              />
+            ) : (
+              <img
+                src={`https://robohash.org/${this.props.user.name}?set=set3`}
+                className="br-100 ba h3 w3 dib"
+                alt="avatar"
+              />
+            )}
           </DropdownToggle>
           <DropdownMenu
             right

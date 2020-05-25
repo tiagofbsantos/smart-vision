@@ -43,16 +43,16 @@ class Signin extends React.Component {
         <main className="pa4 black-80">
           <div className="measure">
             <fieldset id="sign_in" className="ba b--transparent ph0 mh0">
-              <legend className="f1 fw6 ph0 mh0 white-80">Sign In</legend>
+              <legend className="f1 fw6 ph0 mh0 white-90">Sign In</legend>
               <div className="mt3">
                 <label
-                  className="db fw6 lh-copy f6 white-80"
+                  className="db fw6 lh-copy f6 white-90"
                   htmlFor="email-address"
                 >
                   Email
                 </label>
                 <input
-                  className="pa2 input-reset ba white-80 b--white-80 bg-transparent hover-bg-black hover-white-80 w-100 hover-black"
+                  className="pa2 input-reset ba white-90 b--white-90 bg-transparent hover-bg-black hover-white-90 w-100 hover-black"
                   type="email"
                   name="email-address"
                   id="email-address"
@@ -61,13 +61,13 @@ class Signin extends React.Component {
               </div>
               <div className="mv3">
                 <label
-                  className="db fw6 lh-copy f6 white-80"
+                  className="db fw6 lh-copy f6 white-90"
                   htmlFor="password"
                 >
                   Password
                 </label>
                 <input
-                  className="b pa2 input-reset ba white b--white-80 bg-transparent hover-bg-black hover-white-80 w-100 hover-black"
+                  className="b pa2 input-reset ba white b--white-90 bg-transparent hover-bg-black hover-white-90 w-100 hover-black"
                   type="password"
                   name="password"
                   id="password"
@@ -78,7 +78,7 @@ class Signin extends React.Component {
             <div className="">
               <input
                 onClick={this.onSubmitSignIn}
-                className="b ph3 pv2 input-reset ba b--white-80 bg-transparent grow pointer f6 dib white-80"
+                className="b ph3 pv2 input-reset ba b--white-90 bg-transparent grow pointer f6 dib white-90"
                 type="submit"
                 value="Sign in"
               />
@@ -86,7 +86,7 @@ class Signin extends React.Component {
             <div className="lh-copy mt3">
               <p
                 onClick={() => onRouteChange("register")}
-                className="f6 link dim white-80 db pointer"
+                className="f6 link dim white-90 db pointer"
               >
                 Register
               </p>

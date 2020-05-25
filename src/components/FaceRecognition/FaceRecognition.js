@@ -3,8 +3,8 @@ import "./FaceRecognition.css";
 
 const FaceRecognition = ({ imageUrl, boxes }) => {
   return (
-    <div className="center ma">
-      <div className="absolute mt2">
+    <div className="center">
+      <div className="absolute mv8">
         <img
           id="inputimage"
           alt=""

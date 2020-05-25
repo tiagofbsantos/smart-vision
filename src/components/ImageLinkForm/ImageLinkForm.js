@@ -11,11 +11,6 @@ const ImageLinkForm = ({ onInputChange, onPictureSubmit }) => {
       <p className="white f3">Try it out by pasting a picture URL below.</p>
       <div className="center">
         <div className="form center pa4 br3 shadow-5">
-          <div className="square xxlarge shade1"></div>
-          <div className="square xlarge shade2"></div>
-          <div className="square large shade3"></div>
-          <div className="square medium shade4"></div>
-          <div className="square small shade5"></div>
           <input
             className="f4 pa2 w-70 center"
             type="text"

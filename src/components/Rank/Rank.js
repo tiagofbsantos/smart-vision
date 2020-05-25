@@ -4,7 +4,7 @@ class Rank extends React.Component {
   constructor() {
     super();
     this.state = {
-      emoji: ""
+      emoji: "",
     };
   }
 
@@ -22,12 +22,12 @@ class Rank extends React.Component {
     this.generateEmoji(this.props.entries);
   }
 
-  generateEmoji = entries => {
+  generateEmoji = (entries) => {
     fetch(
       `https://ipsmbnwlr0.execute-api.us-west-1.amazonaws.com/prod/rank?rank=${entries}`
     )
-      .then(response => response.json())
-      .then(data => this.setState({ emoji: data.input }))
+      .then((response) => response.json())
+      .then((data) => this.setState({ emoji: data.input }))
       .catch(console.log);
   };
 

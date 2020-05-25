@@ -6,8 +6,7 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       name: this.props.user.name,
-      age: this.props.user.age,
-      pet: this.props.user.pet,
+      avatar: this.props.user.avatar,
     };
   }
 
@@ -16,11 +15,8 @@ class Profile extends React.Component {
       case "user-name":
         this.setState({ name: event.target.value });
         break;
-      case "user-age":
-        this.setState({ age: event.target.value });
-        break;
-      case "user-pet":
-        this.setState({ pet: event.target.value });
+      case "user-avatar":
+        this.setState({ avatar: event.target.value });
         break;
       default:
         return;
@@ -47,16 +43,20 @@ class Profile extends React.Component {
 
   render() {
     const { toggleModal, user } = this.props;
-    const { name, age, pet } = this.state;
+    const { name, avatar } = this.state;
     return (
       <div className="profile-modal">
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center bg-white">
           <main className="pa4 black-80 w-80">
-            <img
-              src="https://tachyons.io/img/logo.jpg"
-              className="h3 w3 dib"
-              alt="avatar"
-            />
+            {user.avatar ? (
+              <img src={user.avatar} className="h3 w3 dib" alt="avatar" />
+            ) : (
+              <img
+                src={`https://robohash.org/${name}?set=set3`}
+                className="h3 w3 dib"
+                alt="avatar"
+              />
+            )}
             <h1>{this.state.name}</h1>
             <h4>{`Images Submitted: ${user.entries}`}</h4>
             <p>{`Member since: ${new Date(
@@ -74,34 +74,30 @@ class Profile extends React.Component {
               name="user-name"
               id="name"
             />
-            <label className="mt2 fw6" htmlFor="user-age">
-              Age:
+            <label className="mt2 fw6" htmlFor="user-avatar">
+              Default avatar is generated based on your name. To use a custom
+              avatar post a picture url here:
             </label>
             <input
               onChange={this.onFormChange}
               className="pa2 ba w-100"
-              placeholder={user.age}
+              placeholder={user.avatar}
               type="text"
-              name="user-age"
-              id="age"
+              name="user-avatar"
+              id="avatar"
             />
-            <label className="mt2 fw6" htmlFor="user-pet">
-              Pet:
-            </label>
-            <input
-              onChange={this.onFormChange}
-              className="pa2 ba w-100"
-              placeholder={user.pet}
-              type="text"
-              name="user-pet"
-              id="pet"
-            />
+            <button
+              onClick={() => this.setState({ avatar: "" })}
+              className="b pa2 grow pointer hover-white w-100 mv4 bg-light-green b--black-20"
+            >
+              Delete Custom Avatar
+            </button>
             <div
               className="mt4"
               style={{ display: "flex", justifyContent: "space-evenly" }}
             >
               <button
-                onClick={() => this.onProfileUpdate({ name, age, pet })}
+                onClick={() => this.onProfileUpdate({ name, avatar })}
                 className="b pa2 grow pointer hover-white w-40 bg-light-blue b--black-20"
               >
                 Save
