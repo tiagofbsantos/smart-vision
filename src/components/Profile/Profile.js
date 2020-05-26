@@ -10,6 +10,12 @@ class Profile extends React.Component {
     };
   }
 
+  keyDown = (event, data) => {
+    if (event.key === "Enter") {
+      this.onProfileUpdate(data);
+    }
+  };
+
   onFormChange = (event) => {
     switch (event.target.name) {
       case "user-name":
@@ -52,7 +58,7 @@ class Profile extends React.Component {
               <img src={user.avatar} className="h3 w3 dib" alt="avatar" />
             ) : (
               <img
-                src={`https://robohash.org/${name}?set=set3`}
+                src={`https://robohash.org/set_set3/${name}`}
                 className="h3 w3 dib"
                 alt="avatar"
               />
@@ -73,6 +79,7 @@ class Profile extends React.Component {
               type="text"
               name="user-name"
               id="name"
+              onKeyDown={(event) => this.keyDown(event, { name, avatar })}
             />
             <label className="mt2 fw6" htmlFor="user-avatar">
               Default avatar is generated based on your name. To use a custom
@@ -85,6 +92,7 @@ class Profile extends React.Component {
               type="text"
               name="user-avatar"
               id="avatar"
+              onKeyDown={(event) => this.keyDown(event, { name, avatar })}
             />
             <button
               onClick={() => this.setState({ avatar: "" })}

@@ -37,7 +37,7 @@ class ProfileIcon extends React.Component {
               />
             ) : (
               <img
-                src={`https://robohash.org/${this.props.user.name}?set=set3`}
+                src={`https://robohash.org/set_set3/${this.props.user.name}`}
                 className="br-100 ba h3 w3 dib"
                 alt="avatar"
               />

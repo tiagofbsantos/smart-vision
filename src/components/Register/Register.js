@@ -11,6 +11,12 @@ class Register extends React.Component {
     };
   }
 
+  keyDown = (event) => {
+    if (event.key === "Enter") {
+      this.onSubmitRegister();
+    }
+  };
+
   onNameChange = (event) => this.setState({ name: event.target.value });
 
   onEmailChange = (event) => this.setState({ email: event.target.value });
@@ -55,6 +61,7 @@ class Register extends React.Component {
                   name="name"
                   id="name"
                   onChange={this.onNameChange}
+                  onKeyDown={this.keyDown}
                 />
               </div>
               <div className="mt3">
@@ -70,6 +77,7 @@ class Register extends React.Component {
                   name="email-address"
                   id="email-address"
                   onChange={this.onEmailChange}
+                  onKeyDown={this.keyDown}
                 />
               </div>
               <div className="mv3">
@@ -85,6 +93,7 @@ class Register extends React.Component {
                   name="password"
                   id="password"
                   onChange={this.onPasswordChange}
+                  onKeyDown={this.keyDown}
                 />
               </div>
             </fieldset>

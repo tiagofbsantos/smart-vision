@@ -10,6 +10,12 @@ class Signin extends React.Component {
     };
   }
 
+  keyDown = (event) => {
+    if (event.key === "Enter") {
+      this.onSubmitSignIn();
+    }
+  };
+
   onEmailChange = (event) => this.setState({ signInEmail: event.target.value });
 
   onPasswordChange = (event) =>
@@ -57,6 +63,7 @@ class Signin extends React.Component {
                   name="email-address"
                   id="email-address"
                   onChange={this.onEmailChange}
+                  onKeyDown={this.keyDown}
                 />
               </div>
               <div className="mv3">
@@ -72,6 +79,7 @@ class Signin extends React.Component {
                   name="password"
                   id="password"
                   onChange={this.onPasswordChange}
+                  onKeyDown={this.keyDown}
                 />
               </div>
             </fieldset>
