@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import Particles from "react-particles-js";
 import { PARTICLES_OPTIONS } from "./particlesOptions";
-import Navigation from "../components/Navigation/Navigation";
-import Signin from "../components/Signin/Signin";
-import Register from "../components/Register/Register";
-import FaceRecognition from "../components/FaceRecognition/FaceRecognition";
-import Logo from "../components/Logo/Logo";
-import ImageLinkForm from "../components/ImageLinkForm/ImageLinkForm";
-import Rank from "../components/Rank/Rank";
-import Modal from "../components/Modal/Modal";
-import Profile from "../components/Profile/Profile";
+import Navigation from "./components/Navigation/Navigation";
+import Signin from "./components/Signin/Signin";
+import Register from "./components/Register/Register";
+import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
+import Logo from "./components/Logo/Logo";
+import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
+import Rank from "./components/Rank/Rank";
+import Modal from "./components/Modal/Modal";
+import Profile from "./components/Profile/Profile";
 import "./App.css";
 
 const initialState = {
@@ -116,34 +116,50 @@ class App extends Component {
 
   onPictureSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    fetch("http://localhost:3005/imageurl", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: window.sessionStorage.getItem("token"),
-      },
-      body: JSON.stringify({ input: this.state.input }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response) {
-          fetch("http://localhost:3005/image", {
-            method: "put",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: window.sessionStorage.getItem("token"),
-            },
-            body: JSON.stringify({ id: this.state.user.id }),
-          })
-            .then((response) => response.json())
-            .then((count) =>
-              this.setState(Object.assign(this.state.user, { entries: count }))
-            )
-            .catch(console.log);
-        }
-        this.displayFaceBoxes(this.calculateFaceLocations(response));
+    if (!this.state.input) {
+      alert("Image URL field left empty. Please fill it.");
+    } else {
+      fetch("http://localhost:3005/imageurl", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: window.sessionStorage.getItem("token"),
+        },
+        body: JSON.stringify({ input: this.state.input }),
       })
-      .catch((err) => console.log(err));
+        .catch(() => {
+          alert(
+            "Unable to connect to the server. Please check your internet connection."
+          );
+        })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          if (response === "unable to work with API") {
+            alert(
+              "Unable to read image URL. Please make sure you paste in an image address/link/URL."
+            );
+          } else if (response) {
+            fetch("http://localhost:3005/image", {
+              method: "put",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: window.sessionStorage.getItem("token"),
+              },
+              body: JSON.stringify({ id: this.state.user.id }),
+            })
+              .then((response) => response.json())
+              .then((count) =>
+                this.setState(
+                  Object.assign(this.state.user, { entries: count })
+                )
+              )
+              .catch(console.log);
+          }
+          this.displayFaceBoxes(this.calculateFaceLocations(response));
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   onRouteChange = (route) => {

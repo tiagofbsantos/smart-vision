@@ -24,24 +24,51 @@ class Register extends React.Component {
   onPasswordChange = (event) => this.setState({ password: event.target.value });
 
   onSubmitRegister = () => {
-    fetch("http://localhost:3005/register", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name,
-      }),
-    })
-      .catch(console.log)
-      .then((response) => response.json())
-      .then((session) => {
-        if (session && session.success === "true") {
-          this.props.saveAuthTokenInSessions(session.token);
-          this.props.loadUser(session.user);
-          this.props.onRouteChange("home");
-        }
-      });
+    if (!this.state.email || !this.state.password || !this.state.name) {
+      alert(
+        "Unable to register user. Name, Email, Password fields were left empty, please fill them."
+      );
+    } else if (!this.state.email.includes("@")) {
+      alert(
+        "Unable to register. Filled email is not a valid email address. A valid email address must include @ symbol. Please fill in a valid email address."
+      );
+    } else {
+      let connectError = false;
+      fetch("http://localhost:3005/register", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+          name: this.state.name,
+        }),
+      })
+        .catch(() => {
+          connectError = true;
+          alert(
+            "Unable to connect to the server. Please check your internet connection."
+          );
+        })
+        .then((response) => response.json())
+        .then((session) => {
+          if (session && session.success === "true") {
+            this.props.saveAuthTokenInSessions(session.token);
+            this.props.loadUser(session.user);
+            this.props.onRouteChange("home");
+          } else if (!connectError) {
+            alert(
+              "Unable to register user. User email is already registered. Please signin instead or register a different email."
+            );
+          }
+        })
+        .catch(() => {
+          if (!connectError) {
+            alert(
+              "Unable to register user. User email is already registered. Please signin instead or register a different email."
+            );
+          }
+        });
+    }
   };
 
   render() {

@@ -22,24 +22,50 @@ class Signin extends React.Component {
     this.setState({ signInPassword: event.target.value });
 
   onSubmitSignIn = () => {
-    fetch("http://localhost:3005/signin", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.signInEmail,
-        password: this.state.signInPassword,
-      }),
-    })
-      .catch(console.log)
-      .then((response) => response.json())
-      .then((session) => {
-        if (session && session.success === "true") {
-          this.props.saveAuthTokenInSessions(session.token);
-          this.props.loadUser(session.user);
-          this.props.onRouteChange("home");
-        }
+    if (!this.state.signInEmail || !this.state.signInPassword) {
+      alert(
+        "Unable to signin. Email and/or Password fields were left empty, please fill them."
+      );
+    } else if (!this.state.signInEmail.includes("@")) {
+      alert(
+        "Unable to signin. Filled email is not a valid email address. A valid email address must include @ symbol. Please fill in a valid email address."
+      );
+    } else {
+      let connectError = false;
+      fetch("http://localhost:3005/signin", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.state.signInEmail,
+          password: this.state.signInPassword,
+        }),
       })
-      .catch(console.log);
+        .catch(() => {
+          connectError = true;
+          alert(
+            "Unable to connect to the server. Please check your internet connection."
+          );
+        })
+        .then((response) => response.json())
+        .then((session) => {
+          if (session && session.success === "true") {
+            this.props.saveAuthTokenInSessions(session.token);
+            this.props.loadUser(session.user);
+            this.props.onRouteChange("home");
+          } else if (!connectError) {
+            alert(
+              "Wrong credentials, please check email and password are correct."
+            );
+          }
+        })
+        .catch(() => {
+          if (!connectError) {
+            alert(
+              "Wrong credentials, please check email and password are correct."
+            );
+          }
+        });
+    }
   };
 
   render() {

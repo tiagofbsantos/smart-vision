@@ -38,6 +38,11 @@ class Profile extends React.Component {
       },
       body: JSON.stringify({ formInput: data }),
     })
+      .catch(() => {
+        alert(
+          "Unable to connect to the server. Please check your internet connection."
+        );
+      })
       .then((resp) => {
         if (resp.status === 200 || resp.status === 304) {
           this.props.toggleModal();
