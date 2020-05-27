@@ -24,8 +24,8 @@ const FaceRecognition = ({ imageUrl, boxes }) => {
                 left: box.leftCol,
               }}
             >
-              <div className="celebDescription">
-                <span>
+              <div key={`d${i}`} className="celebDescription">
+                <span key={`s${i}`}>
                   {box.name}, {Math.trunc(box.certainty * 100)}% sure
                 </span>
               </div>

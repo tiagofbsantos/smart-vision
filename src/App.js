@@ -115,7 +115,7 @@ class App extends Component {
   onInputChange = (event) => this.setState({ input: event.target.value });
 
   onPictureSubmit = () => {
-    this.setState({ imageUrl: this.state.input });
+    this.setState({ imageUrl: this.state.input, boxes: [] });
     if (!this.state.input) {
       alert("Image URL field left empty. Please fill it.");
     } else {
@@ -134,7 +134,6 @@ class App extends Component {
         })
         .then((response) => response.json())
         .then((response) => {
-          console.log(response);
           if (response === "unable to work with API") {
             alert(
               "Unable to read image URL. Please make sure you paste in an image address/link/URL."
