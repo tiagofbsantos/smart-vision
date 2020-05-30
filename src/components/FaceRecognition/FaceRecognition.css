@@ -18,3 +18,10 @@
     0px 0px 10px black;
   z-index: 900;
 }
+
+.bounding-box:hover .celebDescription,
+.bounding-box:focus .celebDescription {
+  font-size: 18px;
+  background-color: #149df2;
+  z-index: 999;
+}
