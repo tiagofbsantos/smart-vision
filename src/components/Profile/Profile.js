@@ -7,6 +7,7 @@ class Profile extends React.Component {
     this.state = {
       name: this.props.user.name,
       avatar: this.props.user.avatar,
+      deleteAvatar: false,
     };
   }
 
@@ -51,6 +52,14 @@ class Profile extends React.Component {
       })
       .catch(console.log);
   };
+
+  componentDidUpdate() {
+    const { avatar, deleteAvatar } = this.state;
+    if (!avatar && deleteAvatar) {
+      this.onProfileUpdate({ avatar });
+      this.setState({ deleteAvatar: false });
+    }
+  }
 
   render() {
     const { toggleModal, user } = this.props;
@@ -100,7 +109,7 @@ class Profile extends React.Component {
               onKeyDown={(event) => this.keyDown(event, { name, avatar })}
             />
             <button
-              onClick={() => this.setState({ avatar: "" })}
+              onClick={() => this.setState({ avatar: "", deleteAvatar: true })}
               className="b pa2 grow pointer hover-white w-100 mv2 bg-light-green b--black-20"
             >
               Delete Custom Avatar
