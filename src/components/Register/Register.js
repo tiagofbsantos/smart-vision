@@ -83,7 +83,7 @@ class Register extends React.Component {
                   Name
                 </label>
                 <input
-                  className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black white-90"
+                  className="pa2 input-reset ba b--white-90 bg-transparent hover-bg-black hover-white w-100 hover-black white-90"
                   type="text"
                   name="name"
                   id="name"
@@ -99,7 +99,7 @@ class Register extends React.Component {
                   Email
                 </label>
                 <input
-                  className="pa2 input-reset ba bg-transparent hover-bg-black hover-white-90 w-100 hover-black white-90"
+                  className="pa2 input-reset ba b--white-90 bg-transparent hover-bg-black hover-white-90 w-100 hover-black white-90"
                   type="email"
                   name="email-address"
                   id="email-address"
