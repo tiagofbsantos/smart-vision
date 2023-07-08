@@ -43,13 +43,13 @@ class Rank extends React.Component<Props, State> {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <div className="white f3">
           {`${this.props.name}, your current entry count is...`}
         </div>
         <div className="white f1">{this.props.entries}</div>
         <div className="white f3">{`Rank Badge: ${this.state.emoji}`}</div>
-      </React.Fragment>
+      </>
     );
   }
 }
