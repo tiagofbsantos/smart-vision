@@ -1,6 +1,20 @@
 import "./FaceRecognition.css";
 
-const FaceRecognition = ({ imageUrl, boxes }) => {
+export interface Box {
+  leftCol: number;
+  topRow: number;
+  rightCol: number;
+  bottomRow: number;
+  name: string;
+  certainty: number;
+}
+
+interface Props {
+  imageUrl: string;
+  boxes: Box[];
+}
+
+const FaceRecognition = ({ imageUrl, boxes }: Props) => {
   return (
     <div className="center">
       <div className="absolute mv8">

@@ -3,7 +3,7 @@ import Particles from "./components/Particles";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
-import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
+import FaceRecognition, { Box } from "./components/FaceRecognition/FaceRecognition";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
@@ -11,15 +11,6 @@ import Modal from "./components/Modal/Modal";
 import Profile from "./components/Profile/Profile";
 import "./App.css";
 import User from "./models/User";
-
-interface Box {
-  leftCol: number;
-  topRow: number;
-  rightCol: number;
-  bottomRow: number;
-  name: string;
-  certainty: number;
-}
 
 interface Props { }
 
