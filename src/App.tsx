@@ -124,7 +124,7 @@ class App extends Component<Props, State> {
     }
   };
 
-  onInputChange = (event) => this.setState({ input: event.target.value });
+  onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => this.setState({ input: event.target.value });
 
   onPictureSubmit = () => {
     this.setState({ imageUrl: this.state.input, boxes: [] });
@@ -160,7 +160,7 @@ class App extends Component<Props, State> {
               body: JSON.stringify({ id: this.state.user.id }),
             })
               .then((response) => response.json())
-              .then((count) =>
+              .then((count: number) =>
                 this.setState(
                   {
                     ...this.state,
@@ -186,7 +186,7 @@ class App extends Component<Props, State> {
   };
 
   toggleModal = () => {
-    this.setState((prevState) => ({
+    this.setState((prevState: State) => ({
       ...prevState,
       isProfileOpen: !prevState.isProfileOpen,
     }));
