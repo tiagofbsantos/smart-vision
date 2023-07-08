@@ -1,8 +1,8 @@
 {
   "name": "smart-vision",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "React Progressive Web App for finding photos in pictures",
+  "description": "React Progressive Web App for finding finding faces in pictures and recognizing celebrities",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -15,17 +15,21 @@
   },
   "homepage": "https://smartvision.tiagofbsantos.com/",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^4.5.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-particles-js": "^2.7.1",
-    "react-scripts": "^3.4.1",
-    "react-tilt": "^0.1.4",
-    "reactstrap": "^8.5.1",
-    "tachyons": "^4.12.0"
+    "bootstrap": "^5.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-tilt": "^1.0.2",
+    "react-tsparticles": "^2.10.1",
+    "reactstrap": "^9.2.0",
+    "tachyons": "^4.12.0",
+    "tsparticles": "^2.10.1"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.6",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
