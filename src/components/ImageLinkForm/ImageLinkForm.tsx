@@ -16,7 +16,7 @@ class ImageLinkForm extends React.Component<Props> {
   render() {
     const { onInputChange, onPictureSubmit } = this.props;
     return (
-      <React.Fragment>
+      <>
         <p className="white f3">
           This Smart Vision will detect faces in your pictures, and what
           celibrities they look like.
@@ -38,7 +38,7 @@ class ImageLinkForm extends React.Component<Props> {
             </button>
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
