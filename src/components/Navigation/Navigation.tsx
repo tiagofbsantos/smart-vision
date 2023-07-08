@@ -1,6 +1,14 @@
 import ProfileIcon from "../Profile/ProfileIcon";
+import User from "../../models/User";
 
-const Navigation = ({ onRouteChange, isSignedIn, toggleModal, user }) => {
+interface Props {
+  onRouteChange: (route: string) => void;
+  isSignedIn: boolean;
+  toggleModal: () => void;
+  user: User;
+}
+
+const Navigation = ({ onRouteChange, isSignedIn, toggleModal, user }: Props) => {
   if (isSignedIn) {
     return (
       <nav style={{ display: "flex", justifyContent: "flex-end" }}>
