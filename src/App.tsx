@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import Particles from "react-particles-js";
-import { PARTICLES_OPTIONS } from "./particlesOptions";
+import Particles from "./components/Particles";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
@@ -11,6 +10,28 @@ import Rank from "./components/Rank/Rank";
 import Modal from "./components/Modal/Modal";
 import Profile from "./components/Profile/Profile";
 import "./App.css";
+import User from "./models/User";
+
+interface Box {
+  leftCol: number;
+  topRow: number;
+  rightCol: number;
+  bottomRow: number;
+  name: string;
+  certainty: number;
+}
+
+interface Props { }
+
+interface State {
+  input: string;
+  imageUrl: string;
+  boxes: Box[],
+  route: string;
+  isSignedIn: boolean;
+  isProfileOpen: boolean;
+  user: User;
+}
 
 const initialState = {
   input: "",
@@ -29,9 +50,9 @@ const initialState = {
   },
 };
 
-class App extends Component {
-  constructor() {
-    super();
+class App extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
     this.state = initialState;
   }
 
@@ -68,28 +89,28 @@ class App extends Component {
     }
   }
 
-  saveAuthTokenInSessions = (token) => {
+  saveAuthTokenInSessions = (token: string) => {
     window.sessionStorage.setItem("token", token);
   };
 
-  loadUser = (data) => {
+  loadUser = (user: User) => {
     this.setState({
       user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined,
-        avatar: data.avatar,
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        entries: user.entries,
+        joined: user.joined,
+        avatar: user.avatar,
       },
     });
   };
 
   calculateFaceLocations = (data) => {
     if (data && data.outputs) {
-      const image = document.getElementById("inputimage");
-      const width = Number(image.width);
-      const height = Number(image.height);
+      const image = document.getElementById("inputimage") as HTMLImageElement;
+      const width = Number(image?.width);
+      const height = Number(image?.height);
       return data.outputs[0].data.regions.map((face) => {
         const clarifaiFace = face.region_info.bounding_box;
         const celibrity = face.data.concepts[0];
@@ -106,7 +127,7 @@ class App extends Component {
     return;
   };
 
-  displayFaceBoxes = (boxes) => {
+  displayFaceBoxes = (boxes: Box[]) => {
     if (boxes) {
       this.setState({ boxes });
     }
@@ -123,7 +144,7 @@ class App extends Component {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          Authorization: window.sessionStorage.getItem("token"),
+          Authorization: window.sessionStorage.getItem("token") || "",
         },
         body: JSON.stringify({ input: this.state.input }),
       })
@@ -132,7 +153,7 @@ class App extends Component {
             "Unable to connect to the server. Please check your internet connection."
           );
         })
-        .then((response) => response.json())
+        .then((response: Response) => response.json())
         .then((response) => {
           if (response === "unable to work with API") {
             alert(
@@ -143,14 +164,20 @@ class App extends Component {
               method: "put",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: window.sessionStorage.getItem("token"),
+                Authorization: window.sessionStorage.getItem("token") || "",
               },
               body: JSON.stringify({ id: this.state.user.id }),
             })
               .then((response) => response.json())
               .then((count) =>
                 this.setState(
-                  Object.assign(this.state.user, { entries: count })
+                  {
+                    ...this.state,
+                    user: {
+                      ...this.state.user,
+                      entries: count
+                    }
+                  }
                 )
               )
               .catch(console.log);
@@ -161,7 +188,7 @@ class App extends Component {
     }
   };
 
-  onRouteChange = (route) => {
+  onRouteChange = (route: string) => {
     if (route === "signout") return this.setState(initialState);
     else if (route === "home") this.setState({ isSignedIn: true });
     this.setState({ route });
@@ -184,48 +211,52 @@ class App extends Component {
       user,
     } = this.state;
     return (
-      <div className="App">
-        <Particles className="particles" params={PARTICLES_OPTIONS} />
-        <Navigation
-          isSignedIn={isSignedIn}
-          onRouteChange={this.onRouteChange}
-          toggleModal={this.toggleModal}
-          user={user}
-        />
-        {isProfileOpen && (
-          <Modal>
-            <Profile
-              isProfileOpen={isProfileOpen}
-              toggleModal={this.toggleModal}
+      <>
+        <div className="particles">
+          <Particles />
+        </div>
+
+        <div className="App">
+          <Navigation
+            isSignedIn={isSignedIn}
+            onRouteChange={this.onRouteChange}
+            toggleModal={this.toggleModal}
+            user={user}
+          />
+          {isProfileOpen && (
+            <Modal>
+              <Profile
+                toggleModal={this.toggleModal}
+                loadUser={this.loadUser}
+                user={user}
+              />
+            </Modal>
+          )}
+          {route === "home" ? (
+            <React.Fragment>
+              <Logo />
+              <Rank name={user.name} entries={user.entries} />
+              <ImageLinkForm
+                onInputChange={this.onInputChange}
+                onPictureSubmit={this.onPictureSubmit}
+              />
+              <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+            </React.Fragment>
+          ) : route === "signin" || route === "signout" ? (
+            <Signin
               loadUser={this.loadUser}
-              user={user}
+              onRouteChange={this.onRouteChange}
+              saveAuthTokenInSessions={this.saveAuthTokenInSessions}
             />
-          </Modal>
-        )}
-        {route === "home" ? (
-          <React.Fragment>
-            <Logo />
-            <Rank name={user.name} entries={user.entries} />
-            <ImageLinkForm
-              onInputChange={this.onInputChange}
-              onPictureSubmit={this.onPictureSubmit}
+          ) : (
+            <Register
+              loadUser={this.loadUser}
+              onRouteChange={this.onRouteChange}
+              saveAuthTokenInSessions={this.saveAuthTokenInSessions}
             />
-            <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
-          </React.Fragment>
-        ) : route === "signin" || route === "signout" ? (
-          <Signin
-            loadUser={this.loadUser}
-            onRouteChange={this.onRouteChange}
-            saveAuthTokenInSessions={this.saveAuthTokenInSessions}
-          />
-        ) : (
-          <Register
-            loadUser={this.loadUser}
-            onRouteChange={this.onRouteChange}
-            saveAuthTokenInSessions={this.saveAuthTokenInSessions}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      </>
     );
   }
 }
