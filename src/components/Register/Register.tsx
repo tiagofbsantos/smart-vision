@@ -53,6 +53,7 @@ const Register = (props: Props) => {
       } catch (error) {
         connectError = true;
         alert("Unable to connect to the server. Please check your internet connection.");
+        console.error(error);
       }
     }
   };
