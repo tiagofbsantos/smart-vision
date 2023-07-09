@@ -68,6 +68,7 @@ const Register = (props: Props) => {
               <label className="db fw6 lh-copy f6 white-90" htmlFor="name">
                 Name
               </label>
+
               <input
                 className="pa2 input-reset ba b--white-90 bg-transparent hover-bg-black hover-white w-100 hover-black white-90"
                 type="text"
@@ -77,6 +78,7 @@ const Register = (props: Props) => {
                 onKeyDown={onKeyDown}
               />
             </div>
+
             <div className="mt3">
               <label
                 className="db fw6 lh-copy f6 white-90"
@@ -84,6 +86,7 @@ const Register = (props: Props) => {
               >
                 Email
               </label>
+
               <input
                 className="pa2 input-reset ba b--white-90 bg-transparent hover-bg-black hover-white-90 w-100 hover-black white-90"
                 type="email"
@@ -93,6 +96,7 @@ const Register = (props: Props) => {
                 onKeyDown={onKeyDown}
               />
             </div>
+
             <div className="mv3">
               <label
                 className="db fw6 lh-copy f6 white-90"
@@ -100,6 +104,7 @@ const Register = (props: Props) => {
               >
                 Password
               </label>
+
               <input
                 className="b pa2 input-reset ba b--white-90 bg-transparent hover-bg-black hover-white w-100 hover-black white-90"
                 type="password"
@@ -110,6 +115,7 @@ const Register = (props: Props) => {
               />
             </div>
           </fieldset>
+
           <div className="">
             <input
               onClick={onSubmitRegister}

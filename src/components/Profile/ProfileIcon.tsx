@@ -34,20 +34,23 @@ const ProfileIcon = (props: Props) => {
           data-toggle="dropdown"
           aria-expanded={idDropdownOpen}
         >
-          {props.user.avatar ? (
-            <img
-              src={props.user.avatar}
-              className="br-100 ba h3 w3 dib"
-              alt="avatar"
-            />
-          ) : (
-            <img
-              src={`https://robohash.org/set_set3/${props.user.name}`}
-              className="br-100 ba h3 w3 dib"
-              alt="avatar"
-            />
-          )}
+          {
+            props.user.avatar ? (
+              <img
+                src={props.user.avatar}
+                className="br-100 ba h3 w3 dib"
+                alt="avatar"
+              />
+            ) : (
+              <img
+                src={`https://robohash.org/set_set3/${props.user.name}`}
+                className="br-100 ba h3 w3 dib"
+                alt="avatar"
+              />
+            )
+          }
         </DropdownToggle>
+
         <DropdownMenu
           end
           className="b--transparent shadow-5"
@@ -59,6 +62,7 @@ const ProfileIcon = (props: Props) => {
           <DropdownItem onClick={props.toggleModal}>
             View Profile
           </DropdownItem>
+
           <DropdownItem onClick={signOut}>
             Sign Out
           </DropdownItem>

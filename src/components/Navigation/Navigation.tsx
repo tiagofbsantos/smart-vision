@@ -28,6 +28,7 @@ const Navigation = ({ onRouteChange, isSignedIn, toggleModal, user }: Props) => 
         >
           Sign In
         </p>
+
         <p
           onClick={() => onRouteChange("register")}
           className="f3 link dim white-90 underline pa3 pointer"

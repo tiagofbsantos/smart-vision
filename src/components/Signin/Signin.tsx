@@ -61,6 +61,7 @@ const Signin = (props: Props) => {
         <div className="measure">
           <fieldset id="sign_in" className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0 white-90">Sign In</legend>
+
             <div className="mt3">
               <label
                 className="db fw6 lh-copy f6 white-90"
@@ -68,6 +69,7 @@ const Signin = (props: Props) => {
               >
                 Email
               </label>
+
               <input
                 className="pa2 input-reset ba white-90 b--white-90 bg-transparent hover-bg-black hover-white-90 w-100 hover-black"
                 type="email"
@@ -77,6 +79,7 @@ const Signin = (props: Props) => {
                 onKeyDown={onKeyDown}
               />
             </div>
+
             <div className="mv3">
               <label
                 className="db fw6 lh-copy f6 white-90"
@@ -84,6 +87,7 @@ const Signin = (props: Props) => {
               >
                 Password
               </label>
+
               <input
                 className="b pa2 input-reset ba white b--white-90 bg-transparent hover-bg-black hover-white-90 w-100 hover-black"
                 type="password"
@@ -94,6 +98,7 @@ const Signin = (props: Props) => {
               />
             </div>
           </fieldset>
+
           <div className="">
             <input
               onClick={onSubmitSignIn}
@@ -102,6 +107,7 @@ const Signin = (props: Props) => {
               value="Sign in"
             />
           </div>
+
           <div className="lh-copy mt3">
             <p
               onClick={() => props.onRouteChange("register")}
