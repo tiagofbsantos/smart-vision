@@ -9,7 +9,7 @@ interface Props {
 const ImageLinkForm = (props: Props) => {
   const { onInputChange, onPictureSubmit } = props;
 
-  const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       props.onPictureSubmit();
     }
@@ -28,7 +28,7 @@ const ImageLinkForm = (props: Props) => {
             className="f4 pa2 w-70 center"
             type="text"
             onChange={onInputChange}
-            onKeyDown={keyDown}
+            onKeyDown={onKeyDown}
           />
           <button
             className="w-30 grow f4 link ph3 pv2 dib white"
