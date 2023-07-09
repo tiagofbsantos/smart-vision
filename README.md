@@ -16,7 +16,7 @@ Created using:
 
 - JSON Web Token
 
-- react-particles-js
+- react-tsparticles
 
 - react-tilt
 
