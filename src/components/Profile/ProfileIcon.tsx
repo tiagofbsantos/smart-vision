@@ -21,6 +21,11 @@ const ProfileIcon = (props: Props) => {
     setIsDropdownOpen(!idDropdownOpen);
   };
 
+  const signOut = () => {
+    window.sessionStorage.removeItem("token");
+    props.onRouteChange("signout");
+  };
+
   return (
     <div className="pa4 tc">
       <Dropdown isOpen={idDropdownOpen} toggle={toggle}>
@@ -54,7 +59,7 @@ const ProfileIcon = (props: Props) => {
           <DropdownItem onClick={props.toggleModal}>
             View Profile
           </DropdownItem>
-          <DropdownItem onClick={() => props.onRouteChange("signout")}>
+          <DropdownItem onClick={signOut}>
             Sign Out
           </DropdownItem>
         </DropdownMenu>
