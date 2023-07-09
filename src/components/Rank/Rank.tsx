@@ -1,57 +1,40 @@
-import React from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface Props {
   name: string;
   entries: number;
 }
 
-interface State {
-  emoji: string;
-}
+const Rank = (props: Props) => {
+  const [emoji, setEmoji] = useState("");
 
-class Rank extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+  const generateEmoji = useCallback(async (entries: number) => {
+    try {
+      const response = await fetch(
+        `https://igmf9hvng9.execute-api.eu-central-1.amazonaws.com/dev/rank?rank=${entries}`
+      );
 
-    this.state = {
-      emoji: "",
-    };
-  }
+      const data = await response.json();
 
-  componentDidMount() {
-    this.generateEmoji(this.props.entries);
-  }
-
-  componentDidUpdate(prevProps: Props, prevState: State) {
-    if (
-      prevProps.entries === this.props.entries &&
-      prevProps.name === this.props.name
-    ) {
-      return null;
+      setEmoji(data.input);
+    } catch (error) {
+      console.error(error);
     }
-    this.generateEmoji(this.props.entries);
-  }
+  }, []);
 
-  generateEmoji = (entries: number) => {
-    fetch(
-      `https://igmf9hvng9.execute-api.eu-central-1.amazonaws.com/dev/rank?rank=${entries}`
-    )
-      .then((response) => response.json())
-      .then((data) => this.setState({ emoji: data.input }))
-      .catch(console.log);
-  };
+  useEffect(() => {
+    generateEmoji(props.entries);
+  }, [props.name, props.entries, generateEmoji]);
 
-  render() {
-    return (
-      <>
-        <div className="white f3">
-          {`${this.props.name}, your current entry count is...`}
-        </div>
-        <div className="white f1">{this.props.entries}</div>
-        <div className="white f3">{`Rank Badge: ${this.state.emoji}`}</div>
-      </>
-    );
-  }
+  return (
+    <>
+      <div className="white f3">
+        {`${props.name}, your current entry count is...`}
+      </div>
+      <div className="white f1">{props.entries}</div>
+      <div className="white f3">{`Rank Badge: ${emoji}`}</div>
+    </>
+  );
 }
 
 export default Rank;
