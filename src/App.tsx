@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+
 import Particles from "./components/Particles";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
@@ -9,102 +10,71 @@ import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import Modal from "./components/Modal/Modal";
 import Profile from "./components/Profile/Profile";
-import "./App.css";
 import User from "./models/User";
+import "./App.css";
 
-interface Props { }
+const App = () => {
+  const [input, setInput] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [boxes, setBoxes] = useState<Box[]>([]);
+  const [route, setRoute] = useState("signin");
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [user, setUser] = useState<User | undefined>();
 
-interface State {
-  input: string;
-  imageUrl: string;
-  boxes: Box[],
-  route: string;
-  isSignedIn: boolean;
-  isProfileOpen: boolean;
-  user: User;
-}
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = window.sessionStorage.getItem("token");
+        if (token) {
+          const response = await fetch("http://localhost:3005/signin", {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token
+            }
+          });
 
-const initialState = {
-  input: "",
-  imageUrl: "",
-  boxes: [],
-  route: "signin",
-  isSignedIn: false,
-  isProfileOpen: false,
-  user: {
-    id: "",
-    name: "",
-    email: "",
-    entries: 0,
-    joined: "",
-    avatar: "",
-  },
-};
-
-class App extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = initialState;
-  }
-
-  componentDidMount() {
-    const token = window.sessionStorage.getItem("token");
-    if (token) {
-      fetch("http://localhost:3005/signin", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      })
-        .then((resp) => resp.json())
-        .then((data) => {
+          const data = await response.json();
           if (data && data.id) {
-            fetch(`http://localhost:3005/profile/${data.id}`, {
+            const response = await fetch(`http://localhost:3005/profile/${data.id}`, {
               method: "get",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: token,
               },
-            })
-              .then((resp) => resp.json())
-              .then((user) => {
-                if (user && user.email) {
-                  this.loadUser(user);
-                  this.onRouteChange("home");
-                }
-              });
-          }
-        })
-        .catch(console.log);
-    }
-  }
+            });
 
-  saveAuthTokenInSessions = (token: string) => {
+            const user = await response.json();
+            if (user && user.email) {
+              loadUser(user);
+              onRouteChange("home");
+            }
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  const saveAuthTokenInSessions = (token: string) => {
     window.sessionStorage.setItem("token", token);
   };
 
-  loadUser = (user: User) => {
-    this.setState({
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        entries: user.entries,
-        joined: user.joined,
-        avatar: user.avatar,
-      },
-    });
-  };
+  const loadUser = (user: User) => setUser(user);
 
-  calculateFaceLocations = (data) => {
-    if (data && data.outputs) {
+  const calculateFaceLocations = (outputs) => {
+    if (outputs) {
       const image = document.getElementById("inputimage") as HTMLImageElement;
+
       const width = Number(image?.width);
       const height = Number(image?.height);
-      return data.outputs[0].data.regions.map((face) => {
+
+      return outputs[0].data.regions.map((face) => {
         const clarifaiFace = face.region_info.bounding_box;
         const celibrity = face.data.concepts[0];
+
         return {
           leftCol: clarifaiFace.left_col * width,
           topRow: clarifaiFace.top_row * height,
@@ -115,141 +85,138 @@ class App extends Component<Props, State> {
         };
       });
     }
-    return;
   };
 
-  displayFaceBoxes = (boxes: Box[]) => {
-    if (boxes) {
-      this.setState({ boxes });
-    }
+  const displayFaceBoxes = (boxes: Box[]) => {
+    if (boxes) setBoxes(boxes);
   };
 
-  onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => this.setState({ input: event.target.value });
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 
-  onPictureSubmit = () => {
-    this.setState({ imageUrl: this.state.input, boxes: [] });
-    if (!this.state.input) {
+  const onPictureSubmit = async () => {
+    setImageUrl(input);
+    setBoxes([]);
+
+    if (!input) {
       alert("Image URL field left empty. Please fill it.");
     } else {
-      fetch("http://localhost:3005/imageurl", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: window.sessionStorage.getItem("token") || "",
-        },
-        body: JSON.stringify({ input: this.state.input }),
-      })
-        .catch(() => {
-          alert(
-            "Unable to connect to the server. Please check your internet connection."
-          );
-        })
-        .then((response: Response) => response.json())
-        .then((response) => {
-          if (response === "unable to work with API") {
-            alert(
-              "Unable to read image URL. Please make sure you paste in an image address/link/URL."
-            );
-          } else if (response) {
-            fetch("http://localhost:3005/image", {
-              method: "put",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: window.sessionStorage.getItem("token") || "",
-              },
-              body: JSON.stringify({ id: this.state.user.id }),
-            })
-              .then((response) => response.json())
-              .then((count: number) =>
-                this.setState(
-                  {
-                    ...this.state,
-                    user: {
-                      ...this.state.user,
-                      entries: count
-                    }
-                  }
-                )
-              )
-              .catch(console.log);
-          }
-          this.displayFaceBoxes(this.calculateFaceLocations(response));
-        })
-        .catch((err) => console.log(err));
+      try {
+        const urlResponse = await fetch("http://localhost:3005/imageurl", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: window.sessionStorage.getItem("token") || "",
+          },
+          body: JSON.stringify({ input })
+        });
+
+        const data = await urlResponse.json();
+
+        if (data === "unable to work with API") {
+          alert("Unable to read image URL. Please make sure you paste in an image address/link/URL.");
+        } else if (data) {
+          const imageResponse = await fetch("http://localhost:3005/image", {
+            method: "put",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: window.sessionStorage.getItem("token") || "",
+            },
+            body: JSON.stringify({ id: user.id })
+          });
+
+          const entries = await imageResponse.json();
+
+          setUser({
+            ...user,
+            entries
+          });
+        }
+
+        displayFaceBoxes(calculateFaceLocations(data.outputs));
+      } catch (error) {
+        alert("Unable to connect to the server. Please check your internet connection.");
+        console.error(error);
+      }
     }
   };
 
-  onRouteChange = (route: string) => {
-    if (route === "signout") return this.setState(initialState);
-    else if (route === "home") this.setState({ isSignedIn: true });
-    this.setState({ route });
+  const onRouteChange = (route: string) => {
+    if (route === "signout") {
+      setInput("");
+      setImageUrl("");
+      setBoxes([]);
+      setRoute("signin");
+      setIsSignedIn(false);
+      setIsProfileOpen(false);
+      setUser(undefined);
+
+      return;
+    } else if (route === "home") {
+      setIsSignedIn(true);
+    }
+
+    setRoute(route);
   };
 
-  toggleModal = () => {
-    this.setState((prevState: State) => ({
-      ...prevState,
-      isProfileOpen: !prevState.isProfileOpen,
-    }));
-  };
+  const toggleModal = () => setIsProfileOpen(!isProfileOpen);
 
-  render() {
-    const {
-      isSignedIn,
-      imageUrl,
-      route,
-      boxes,
-      isProfileOpen,
-      user,
-    } = this.state;
-    return (
-      <>
-        <div className="particles">
-          <Particles />
-        </div>
+  return (
+    <>
+      <div className="particles">
+        <Particles />
+      </div>
 
-        <div className="App">
-          <Navigation
-            isSignedIn={isSignedIn}
-            onRouteChange={this.onRouteChange}
-            toggleModal={this.toggleModal}
-            user={user}
-          />
-          {isProfileOpen && (
+      <div className="App">
+        <Navigation
+          isSignedIn={isSignedIn}
+          onRouteChange={onRouteChange}
+          toggleModal={toggleModal}
+          user={user}
+        />
+
+        {
+          isProfileOpen && (
             <Modal>
               <Profile
-                toggleModal={this.toggleModal}
-                loadUser={this.loadUser}
+                toggleModal={toggleModal}
+                loadUser={loadUser}
                 user={user}
               />
             </Modal>
-          )}
-          {route === "home" ? (
-            <React.Fragment>
+          )
+        }
+
+        {
+          route === "home" ? (
+            <>
               <Logo />
+
               <Rank name={user.name} entries={user.entries} />
+
               <ImageLinkForm
-                onInputChange={this.onInputChange}
-                onPictureSubmit={this.onPictureSubmit}
+                onInputChange={onInputChange}
+                onPictureSubmit={onPictureSubmit}
               />
+
               <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
-            </React.Fragment>
+            </>
           ) : route === "signin" || route === "signout" ? (
             <Signin
-              loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange}
-              saveAuthTokenInSessions={this.saveAuthTokenInSessions}
+              loadUser={loadUser}
+              onRouteChange={onRouteChange}
+              saveAuthTokenInSessions={saveAuthTokenInSessions}
             />
           ) : (
             <Register
-              loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange}
-              saveAuthTokenInSessions={this.saveAuthTokenInSessions}
+              loadUser={loadUser}
+              onRouteChange={onRouteChange}
+              saveAuthTokenInSessions={saveAuthTokenInSessions}
             />
-          )}
-        </div>
-      </>
-    );
-  }
+          )
+        }
+      </div>
+    </>
+  );
 }
 
 export default App;
