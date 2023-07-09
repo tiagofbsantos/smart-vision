@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Dropdown,
   DropdownToggle,
@@ -14,66 +14,53 @@ interface Props {
   onRouteChange: (route: string) => void;
 }
 
-interface State {
-  dropdownOpen: boolean;
-}
+const ProfileIcon = (props: Props) => {
+  const [idDropdownOpen, setIsDropdownOpen] = useState(false);
 
-class ProfileIcon extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      dropdownOpen: false,
-    };
-  }
-
-  toggle = () => {
-    this.setState((prevState: State) => ({
-      dropdownOpen: !prevState.dropdownOpen,
-    }));
+  const toggle = () => {
+    setIsDropdownOpen(!idDropdownOpen);
   };
 
-  render() {
-    return (
-      <div className="pa4 tc">
-        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-          <DropdownToggle
-            tag="span"
-            data-toggle="dropdown"
-            aria-expanded={this.state.dropdownOpen}
-          >
-            {this.props.user.avatar ? (
-              <img
-                src={this.props.user.avatar}
-                className="br-100 ba h3 w3 dib"
-                alt="avatar"
-              />
-            ) : (
-              <img
-                src={`https://robohash.org/set_set3/${this.props.user.name}`}
-                className="br-100 ba h3 w3 dib"
-                alt="avatar"
-              />
-            )}
-          </DropdownToggle>
-          <DropdownMenu
-            right
-            className="b--transparent shadow-5"
-            style={{
-              marginTop: "20px",
-              backgroundColor: "rgba(255, 255, 255, 0.5)",
-            }}
-          >
-            <DropdownItem onClick={this.props.toggleModal}>
-              View Profile
-            </DropdownItem>
-            <DropdownItem onClick={() => this.props.onRouteChange("signout")}>
-              Sign Out
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </div>
-    );
-  }
+  return (
+    <div className="pa4 tc">
+      <Dropdown isOpen={idDropdownOpen} toggle={toggle}>
+        <DropdownToggle
+          tag="span"
+          data-toggle="dropdown"
+          aria-expanded={idDropdownOpen}
+        >
+          {props.user.avatar ? (
+            <img
+              src={props.user.avatar}
+              className="br-100 ba h3 w3 dib"
+              alt="avatar"
+            />
+          ) : (
+            <img
+              src={`https://robohash.org/set_set3/${props.user.name}`}
+              className="br-100 ba h3 w3 dib"
+              alt="avatar"
+            />
+          )}
+        </DropdownToggle>
+        <DropdownMenu
+          right
+          className="b--transparent shadow-5"
+          style={{
+            marginTop: "20px",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+          }}
+        >
+          <DropdownItem onClick={props.toggleModal}>
+            View Profile
+          </DropdownItem>
+          <DropdownItem onClick={() => props.onRouteChange("signout")}>
+            Sign Out
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    </div>
+  );
 }
 
 export default ProfileIcon;
