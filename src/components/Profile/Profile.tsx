@@ -146,6 +146,6 @@ const Profile = (props: Props) => {
       </article>
     </div>
   );
-}
+};
 
 export default Profile;

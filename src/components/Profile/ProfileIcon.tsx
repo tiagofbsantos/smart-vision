@@ -61,6 +61,6 @@ const ProfileIcon = (props: Props) => {
       </Dropdown>
     </div>
   );
-}
+};
 
 export default ProfileIcon;

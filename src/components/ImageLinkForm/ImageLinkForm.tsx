@@ -40,6 +40,6 @@ const ImageLinkForm = (props: Props) => {
       </div>
     </>
   );
-}
+};
 
 export default ImageLinkForm;

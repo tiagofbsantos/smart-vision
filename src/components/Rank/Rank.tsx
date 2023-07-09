@@ -35,6 +35,6 @@ const Rank = (props: Props) => {
       <div className="white f3">{`Rank Badge: ${emoji}`}</div>
     </>
   );
-}
+};
 
 export default Rank;

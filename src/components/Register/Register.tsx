@@ -121,6 +121,6 @@ const Register = (props: Props) => {
       </main>
     </article>
   );
-}
+};
 
 export default Register;
