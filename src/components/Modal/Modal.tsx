@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./Modal.css";
 
@@ -8,25 +8,18 @@ interface Props {
 
 const modalRoot = document.getElementById("modal-root");
 
-class Modal extends React.Component<Props> {
-  el: HTMLDivElement;
+const el = document.createElement("div");
 
-  constructor(props: Props) {
-    super(props);
-    this.el = document.createElement("div");
-  }
+const Modal = (props: Props) => {
+  useEffect(() => {
+    modalRoot?.appendChild(el);
 
-  componentDidMount() {
-    modalRoot?.appendChild(this.el);
-  }
+    return () => {
+      modalRoot?.removeChild(el);
+    }
+  }, []);
 
-  componentWillUnmount() {
-    modalRoot?.removeChild(this.el);
-  }
-
-  render() {
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
+  return ReactDOM.createPortal(props.children, el);
 }
 
 export default Modal;
